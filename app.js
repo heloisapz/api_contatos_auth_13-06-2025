@@ -6,6 +6,10 @@ const conectarBanco = require('./config/db');
 
 const contatoRoutes = require('./routes/contatoRoutes');
 
+const userRoutes = require('./routes/userRoutes');
+
+const authMiddleware = require('./middleware/authMiddleware');
+
 
 dotenv.config();
 //pegar tudo no arquivo .env
@@ -19,8 +23,9 @@ app.use(express.json());
 
 
 // Rotas principais
+app.use('/api/usuarios', userRoutes); // Rotas públicas
+app.use('/api/contatos', authMiddleware, contatoRoutes); // Rotas protegidas
 
-app.use('/api/contatos', contatoRoutes);
 //rota para entidade 'contatos'
 
 
